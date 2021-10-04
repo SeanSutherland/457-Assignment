@@ -89,9 +89,18 @@ def transformImage( oldImage, newImage, forwardTransform ):
     # the pixels are stored as YCbCr, use (0,128,128) as the pixel
     # value, which is black in that colourspace.
 
-    # [YOUR CODE HERE]
-    
+    backwardTransform = np.linalg.inv(forwardTransform)
 
+    for x_new in range(width):
+      for y_new in range(height):
+        [x,y,a] = np.dot(backwardTransform, [x_new,y_new,1])
+        if x < width and x > 0 and y < height and y > 0:
+          dstPixels[x_new, y_new] = srcPixels[x,y]
+        else:
+          dstPixels[x_new, y_new] = (0,128,128)
+
+        #I'(x',y') = I(x,y)   
+    
 
 # Scale an image by s around its centre
 
@@ -109,7 +118,12 @@ def scaleImage( oldImage, newImage, s ):
     cx = oldImage.size[0]/2 # image centre
     cy = oldImage.size[1]/2
 
-    # [ YOUR CODE HERE ]
+    A = [[1,0,-cx],[0 , 1 ,-cy],[0,0,1]]
+    B = [[s,0,0],[0 , s ,0],[0,0,1]]
+    C = [[1,0,cx],[0 , 1 ,cy],[0,0,1]]
+    
+    transform = np.dot(C, np.dot(B,A))
+    transformImage(oldImage, newImage, transform)
     
   
 
@@ -120,7 +134,15 @@ def rotateImage( oldImage, newImage, theta ):
     # Rotate the image around its centre by angle 'theta'.  This is
     # very similar to scaleImage(), so do that function first.
     
-    # [ YOUR CODE HERE ]
+    cx = oldImage.size[0]/2 # image centre
+    cy = oldImage.size[1]/2
+
+    A = [[1,0,-cx],[0 , 1 ,-cy],[0,0,1]]
+    B = [[np.cos(theta),-np.sin(theta),0],[np.sin(theta) , np.cos(theta) ,0],[0,0,1]]
+    C = [[1,0,cx],[0 , 1 ,cy],[0,0,1]]
+    
+    transform = np.dot(C, np.dot(B,A))
+    transformImage(oldImage, newImage, transform)
   
 
     

@@ -8,19 +8,19 @@ translation, scaling, and rotation to images.
 Undergraduates may work in groups of two. Graduate students must work
 individually.
 
-1. Get the main.py code running. READ ALL OF THE CODE AND UNDERSTAND
-   HOW IT WORKS.
+1. ~~Get the main.py code running. READ ALL OF THE CODE AND UNDERSTAND
+   HOW IT WORKS.~~
 
-2. Modify transformImage() to apply backward projection according to
+2. ~~Modify transformImage() to apply backward projection according to
    the comments in that code. Once this is done, test it by trying to
    translate the image by moving the mouse with the left button held
-   down. You'll find that Python performs the translation slowly.
+   down. You'll find that Python performs the translation slowly.~~
 
-3. Modify scaleImage() according to the comments in that code. Test
-   with the mouse.
+3. ~~Modify scaleImage() according to the comments in that code. Test
+   with the mouse.~~
 
-4. Modify rotateImage() according to the comments in that code. Test
-   with the mouse.
+4. ~~Modify rotateImage() according to the comments in that code. Test
+   with the mouse.~~
 
 5. Modify the code so that multiple transformations do not cause parts of
    the image to be lost. Do not do this part until the transformations
