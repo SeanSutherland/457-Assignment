@@ -55,6 +55,7 @@ imgFilename = 'mandrill.png'
 loadedImage  = None  # image originally loaded
 currentImage = None  # image being displayed
 
+global acc_transform
 
 
 # File dialog (doesn't work on Mac OSX)
@@ -75,11 +76,15 @@ if haveTK:
 def transformImage( oldImage, newImage, forwardTransform ):
 
     # Get image info
-  
+
     width, height = oldImage.size # (same as newImage.size)
 
     srcPixels = oldImage.load()
     dstPixels = newImage.load()
+
+    global acc_transform
+
+    acc_transform = np.dot(forwardTransform,acc_transform)
 
     # Using backward projection, fill in the dstPixels array by
     # finding, for each location dstPixels[dstX,dstY], the
@@ -89,7 +94,7 @@ def transformImage( oldImage, newImage, forwardTransform ):
     # the pixels are stored as YCbCr, use (0,128,128) as the pixel
     # value, which is black in that colourspace.
 
-    backwardTransform = np.linalg.inv(forwardTransform)
+    backwardTransform = np.linalg.inv(acc_transform)
 
     for x_new in range(width):
       for y_new in range(height):
@@ -354,6 +359,9 @@ def actOnMouseMovement( window, button, x, y ):
 def main():
 
     global mousePositionChanged, button
+    global acc_transform
+    
+    acc_transform = [[1,0,0],[0,1,0],[0,0,1]]
     
     if not glfw.init():
         print( 'Error: GLFW failed to initialize' )
